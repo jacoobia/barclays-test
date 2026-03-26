@@ -1,0 +1,13 @@
+{
+  "name": "Test User",
+  "address": {
+    "line1": "Example Street",
+    "line2": "Some random place",
+    "line3": "In space and time",
+    "town": "Salford",
+    "county": "Greater Manchester",
+    "postcode": "M50 2EQ"
+  },
+  "phoneNumber": "07777777777",
+  "email": "user@example.com"
+}
