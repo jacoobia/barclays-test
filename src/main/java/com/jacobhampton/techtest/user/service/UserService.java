@@ -6,6 +6,7 @@ import com.jacobhampton.techtest.user.model.User;
 import com.jacobhampton.techtest.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -16,12 +17,15 @@ import java.time.Instant;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserResponseDto addUser(CreateUserRequestDto request) {
+    public UserResponseDto createUser(CreateUserRequestDto request) {
         Instant now = Instant.now();
+        String hashedPassword = passwordEncoder.encode(request.password());
         User created = userRepository.save(new User(
                 null,
                 request.name(),
+                hashedPassword,
                 request.address(),
                 request.phoneNumber(),
                 request.email(),

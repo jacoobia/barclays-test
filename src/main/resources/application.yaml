@@ -9,3 +9,10 @@ spring:
     database: dev
 server:
   port: 8080
+
+
+app:
+  jwt:
+    accessTokenExpiry: 900000
+    refreshTokenExpiry: 604800000
+    secret: ${JWT_SECRET:some-very-secret-string-lol}

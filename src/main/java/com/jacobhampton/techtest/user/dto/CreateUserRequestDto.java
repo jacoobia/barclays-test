@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Pattern;
 public record CreateUserRequestDto(
         @NotNull(message = "Name is required")
         String name,
+        @NotNull(message = "Password is required")
+        @Pattern(regexp = "^.{8,}$", message = "Password must be at least 8 characters")
+        String password,
         @NotNull(message = "Address is required")
         UserAddressDto address,
         @NotNull(message = "Phone number is required")
