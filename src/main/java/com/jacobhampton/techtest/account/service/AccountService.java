@@ -61,15 +61,21 @@ public class AccountService {
         return !accountRepository.findByUserId(authContext.getUserId()).isEmpty();
     }
 
-
+    /**
+     * Originally I had added this has account check before reading further and seeing the scenario:
+     * "User wants to fetch another user's bank account details" which should return forbidden not 404
+     * if(!hasAccount())  throw new ResourceNotFoundException("You have no accounts");
+     */
     public AccountResponseDto getAccount(String accountNumber) {
-        if(!hasAccount()) {
-            throw new ResourceNotFoundException("You have no accounts");
+        AuthContext authContext = AuthContext.get();
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if(!account.getUserId().equals(authContext.getUserId())) {
+            throw new AccessDeniedException("Unauthorized");
         }
 
-        return accountRepository.findByAccountNumber(accountNumber)
-                .map(AccountResponseDto::from)
-                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+        return AccountResponseDto.from(account);
     }
 
     public AccountResponseDto updateAccount(String accountNumber, @Valid UpdateAccountRequestDto request) {
