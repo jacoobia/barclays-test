@@ -1,8 +1,9 @@
 package com.jacobhampton.techtest.user.service;
 
+import com.jacobhampton.techtest.account.service.AccountService;
 import com.jacobhampton.techtest.auth.context.AuthContext;
 import com.jacobhampton.techtest.shared.exception.AccessDeniedException;
-import com.jacobhampton.techtest.shared.exception.UserNotFoundException;
+import com.jacobhampton.techtest.shared.exception.ResourceNotFoundException;
 import com.jacobhampton.techtest.user.dto.CreateUserRequestDto;
 import com.jacobhampton.techtest.user.dto.UserResponseDto;
 import com.jacobhampton.techtest.user.model.User;
@@ -23,6 +24,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AccountService accountService;
 
     public UserResponseDto createUser(CreateUserRequestDto request) {
         Instant now = Instant.now();
@@ -48,7 +50,7 @@ public class UserService {
 
         return userRepository.findById(userId)
                 .map(UserResponseDto::from)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
     public UserResponseDto updateUser(String userId, CreateUserRequestDto body) {
@@ -58,7 +60,7 @@ public class UserService {
         }
 
         User existingUser = userRepository.findById(authContext.getUserId())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         if (body.name() != null) existingUser.setName(body.name());
         if (body.address() != null) existingUser.setAddress(body.address());
@@ -77,8 +79,12 @@ public class UserService {
             throw new AccessDeniedException("Unauthorized");
         }
 
+        if(accountService.hasAccount()) {
+            throw new AccessDeniedException("Cannot delete user with existing accounts");
+        }
+
         User existingUser = userRepository.findById(authContext.getUserId())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         userRepository.delete(existingUser);
     }

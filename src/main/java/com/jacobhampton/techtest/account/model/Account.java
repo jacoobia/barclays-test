@@ -18,6 +18,8 @@ public class Account {
     @Id
     private String id;
 
+    private String userId;
+
     @Indexed(unique = true)
     private String accountNumber;
 
