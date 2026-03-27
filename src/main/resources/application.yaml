@@ -12,6 +12,9 @@ spring:
     database: dev
 
 app:
+  sort-code:
+    barclays-code: 20
+    branch-code: ${BRANCH_CODE:1234}
   jwt:
     accessTokenExpiry: 900000
     refreshTokenExpiry: 604800000
