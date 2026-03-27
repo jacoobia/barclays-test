@@ -7,6 +7,8 @@ import com.jacobhampton.techtest.user.dto.CreateUserRequestDto;
 import com.jacobhampton.techtest.user.dto.UserResponseDto;
 import com.jacobhampton.techtest.user.model.User;
 import com.jacobhampton.techtest.user.repo.UserRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,4 +51,35 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
+    public UserResponseDto updateUser(String userId, CreateUserRequestDto body) {
+        AuthContext authContext = AuthContext.get();
+        if(!authContext.getUserId().equals(userId)) {
+            throw new AccessDeniedException("Unauthorized");
+        }
+
+        User existingUser = userRepository.findById(authContext.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (body.name() != null) existingUser.setName(body.name());
+        if (body.address() != null) existingUser.setAddress(body.address());
+        if (body.phoneNumber() != null) existingUser.setPhoneNumber(body.phoneNumber());
+        if (body.email() != null) existingUser.setEmail(body.email());
+
+        existingUser.setUpdatedTimestamp(Instant.now());
+
+        User updated = userRepository.save(existingUser);
+        return UserResponseDto.from(updated);
+    }
+
+    public void deleteUser(@Valid @NotNull String userId) {
+        AuthContext authContext = AuthContext.get();
+        if(!authContext.getUserId().equals(userId)) {
+            throw new AccessDeniedException("Unauthorized");
+        }
+
+        User existingUser = userRepository.findById(authContext.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        userRepository.delete(existingUser);
+    }
 }
