@@ -1,0 +1,316 @@
+opencollection: 1.0.0
+info:
+  name: Tech Test
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ''
+      port: ''
+      auth:
+        username: ''
+        password: ''
+      bypassProxy: ''
+items:
+  - info:
+      name: account
+      type: folder
+      seq: 6
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Create Account
+          type: http
+          seq: 1
+        http:
+          method: POST
+          url: http://localhost:8080/v1/account
+          body:
+            type: json
+            data: |-
+              {
+                "accountType": "business",
+                "name": "Company Account"
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Account By Account Number
+          type: http
+          seq: 3
+        http:
+          method: GET
+          url: http://localhost:8080/v1/account/00883592
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Accounts
+          type: http
+          seq: 2
+        http:
+          method: GET
+          url: http://localhost:8080/v1/account
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Delete Account
+          type: http
+          seq: 4
+        http:
+          method: DELETE
+          url: http://localhost:8080/v1/account/00883592
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Update Account
+          type: http
+          seq: 5
+        http:
+          method: PATCH
+          url: http://localhost:8080/v1/account/00883592
+          body:
+            type: json
+            data: |-
+              {
+                "name": "AccountMan5000"
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: user
+      type: folder
+      seq: 4
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Create User 0
+          type: http
+          seq: 1
+        http:
+          method: POST
+          url: http://localhost:8080/v1/users
+          body:
+            type: json
+            data: |-
+              {
+                "name": "Bruce Wayne",
+                "address": {
+                  "line1": "Wayne Manor",
+                  "line2": "Gothem",
+                  "line3": "",
+                  "town": "Gothem",
+                  "county": "Gothem City",
+                  "postcode": "G0T H3M"
+                },
+                "phoneNumber": "+447777777777",
+                "email": "bruce@wayneindustries.com",
+                "password": "87654321"
+              }
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Create User 1
+          type: http
+          seq: 4
+        http:
+          method: POST
+          url: http://localhost:8080/v1/users
+          body:
+            type: json
+            data: |-
+              {
+                "name": "Indiana Jones",
+                "address": {
+                  "line1": "38 Alder Avenue",
+                  "line2": " San Anselmo",
+                  "line3": "",
+                  "town": " San Anselmo",
+                  "county": "California",
+                  "postcode": "111 111"
+                },
+                "phoneNumber": "+448888888888",
+                "email": "indiana@thatonemuseum.com",
+                "password": "12345678"
+              }
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Delete User
+          type: http
+          seq: 4
+        http:
+          method: DELETE
+          url: http://localhost:8080/v1/users/69c5d5023560a14a5e5ec8a7
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Users
+          type: http
+          seq: 2
+        http:
+          method: GET
+          url: http://localhost:8080/v1/users/69c5d5023560a14a5e5ec8a7
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: auth
+      type: folder
+      seq: 5
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Refresh Token
+          type: http
+          seq: 2
+        http:
+          method: POST
+          url: http://localhost:8080/v1/auth/refresh
+          body:
+            type: json
+            data: |-
+              {
+                "refreshToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2OWM1YmM1NzVmY2MxMTkzMjMzMTQ5ZTMiLCJpYXQiOjE3NzQ1NzE2ODYsImV4cCI6MTc3NTE3NjQ4Nn0.PZaGshhQZ9OP_v4ppZI0RIjInTI3HpeQy6Scq7nH3gqSTCsQpZ3As72CFMdeDh5tFJDmnm25cCjYjCnGar4WNQ"
+              }
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Sign In
+          type: http
+          seq: 4
+        http:
+          method: POST
+          url: http://localhost:8080/v1/auth/login
+          body:
+            type: json
+            data: |-
+              // {
+              //   "email": "jacob.hampton@hotmail.co.uk",
+              //   "password": "12345678"
+              // }
+              {
+                "email": "bruce@wayneindustries.com",
+                "password": "87654321"
+              }
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: transaction
+      type: folder
+      seq: 1
+    request:
+      auth: inherit
+      variables:
+        - name: account-id
+          value: '00883592'
+    items:
+      - info:
+          name: Create Transaction
+          type: http
+          seq: 1
+        http:
+          method: POST
+          url: http://localhost:8080/v1/account/{{account-id}}/transactions
+          body:
+            type: json
+            data: |-
+              {
+                "amount": "100.50",
+                "currency": "GBP",
+                "type": "DEPOSIT",
+                "reference": "Cash Deposit"
+              }
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Transactions
+          type: http
+          seq: 2
+        http:
+          method: GET
+          url: http://localhost:8080/v1/account/{{account-id}}/transactions
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Transaction
+          type: http
+          seq: 3
+        http:
+          method: GET
+          url: http://localhost:8080/v1/account/{{account-id}}/transactions/{{transaction-id}}
+          auth: inherit
+        runtime:
+          variables:
+            - name: transaction-id
+              value: 69c6a651757407a5675d9e43
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+request:
+  auth:
+    type: bearer
+    token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2OWM1Y2QwZGYyNDdmOTU0YWY5MmMwMDQiLCJpYXQiOjE3NzQ2MjcwNDUsImV4cCI6MTc3NDYyNzk0NX0.ykIIcHusl6BqmfM6Ljs24s5est9342LhX5wZwuL9Vjggr4dyPZb3rSfY1Kx2kMPQSW0NHu964-rve0VaXQZXCA
+bundled: true
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    presets:
+      requestType: http
+      requestUrl: http://localhost:8080
+    exportedAt: '2026-03-27T16:24:59.285Z'
+    exportedUsing: Bruno
