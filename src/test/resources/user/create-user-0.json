@@ -1,0 +1,14 @@
+{
+  "name": "Bruce Wayne",
+  "address": {
+    "line1": "Wayne Manor",
+    "line2": "Gothem",
+    "line3": "",
+    "town": "Gothem",
+    "county": "Gothem City",
+    "postcode": "G0T H3M"
+  },
+  "phoneNumber": "+447777777777",
+  "email": "bruce@wayneindustries.com",
+  "password": "87654321"
+}

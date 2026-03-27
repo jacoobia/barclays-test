@@ -2,6 +2,7 @@ package com.jacobhampton.techtest.user.controller;
 
 import com.jacobhampton.techtest.shared.dto.ErrorResponseDto;
 import com.jacobhampton.techtest.user.dto.CreateUserRequestDto;
+import com.jacobhampton.techtest.user.dto.UpdateUserRequestDto;
 import com.jacobhampton.techtest.user.dto.UserResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -82,7 +83,7 @@ public interface UserControllerSpec {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDto.class))
             )
     })
-    ResponseEntity<UserResponseDto> updateUser(@Valid @NotNull @Parameter(description = "User ID") @PathVariable String userId, @RequestBody CreateUserRequestDto body);
+    ResponseEntity<UserResponseDto> updateUser(@Valid @NotNull @Parameter(description = "User ID") @PathVariable String userId, @RequestBody UpdateUserRequestDto body);
 
     @Operation(summary = "Delete a user", description = "Deletes a user by their unique identifier")
     @ApiResponses({

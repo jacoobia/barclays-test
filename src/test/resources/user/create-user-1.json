@@ -1,0 +1,14 @@
+{
+  "name": "Indiana Jones",
+  "address": {
+    "line1": "38 Alder Avenue",
+    "line2": " San Anselmo",
+    "line3": "",
+    "town": " San Anselmo",
+    "county": "California",
+    "postcode": "111 111"
+  },
+  "phoneNumber": "+448888888888",
+  "email": "indiana@thatonemuseum.com",
+  "password": "12345678"
+}

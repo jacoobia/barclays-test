@@ -5,6 +5,7 @@ import com.jacobhampton.techtest.auth.context.AuthContext;
 import com.jacobhampton.techtest.shared.exception.AccessDeniedException;
 import com.jacobhampton.techtest.shared.exception.ResourceNotFoundException;
 import com.jacobhampton.techtest.user.dto.CreateUserRequestDto;
+import com.jacobhampton.techtest.user.dto.UpdateUserRequestDto;
 import com.jacobhampton.techtest.user.dto.UserResponseDto;
 import com.jacobhampton.techtest.user.model.User;
 import com.jacobhampton.techtest.user.repo.UserRepository;
@@ -53,7 +54,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
-    public UserResponseDto updateUser(String userId, CreateUserRequestDto body) {
+    public UserResponseDto updateUser(String userId, UpdateUserRequestDto body) {
         AuthContext authContext = AuthContext.get();
         if(!authContext.getUserId().equals(userId)) {
             throw new AccessDeniedException("Unauthorized");

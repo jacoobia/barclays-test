@@ -18,8 +18,9 @@ JWT_SECRET=some long secret used to generate JWTs
 
 ## Databasing
 
-I realistically wouldn't use any kind of document based DB for a bank project like this and would lean more relational (I tend to favour Postgres, but who doesn't? lol) but for speed of prototyping mongo is undefeated,
-and I haven't enabled virtualisation for my computer since I did a clean install of windows recently so docker wont work hahahaha
+I realistically wouldn't use any kind of document based DB for a bank project like this and would lean more relational, I tend to favour Postgres, but who doesn't?.
+Another reason I used MongoDB is because it's effectively schema-less so iteration is quick and easy, need a new field? throw it in. Need to get rid of a field? Drop it from the document class.
+This was useful when it came to the auth section as it allowed me to add a password to the user document without having to worry about database migration.
 
 ## Auth
 
@@ -32,3 +33,18 @@ it could be improved significantly, for one I wouldn't really put the ownership 
 
 This is a private org I made for one of my personal projects, but this is the auth lib mentioned above, happy to run through it on the call if interested
 https://github.com/LumbridgeGuide/auth-library/tree/main
+
+
+## Mapping improvements
+
+For POC purposes I have used a `.from()` method pattern on my response DTOs, since separation of DTOs and document models is something I tend to do for security reasons. 
+In a real project, I would probably use MapStruct to generate mappers for me during compilation, this does require some plugin changes to the POM build process to not break Lombok but ultimately it's worth it to avoid boilerplate and ensure consistency.
+
+https://mapstruct.org/
+
+## Testing
+
+I would have, given more time added tests for more than just the user service but the user service tests are an example of how I would build tests.
+I tend to build tests that are defined first, then I abstract out the data into json files that can be updates as the project evolves since contracts/payloads tend to change.
+This approach also affords the opportunity to create new test data and swap out test data as and when needed, case and point currently I use `create-user-0.json` but I could easily switch over to using `create-user-1.json` to 
+prove nothing is hard coded in the tests.

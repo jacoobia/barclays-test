@@ -2,6 +2,7 @@ package com.jacobhampton.techtest.user.controller;
 
 import com.jacobhampton.techtest.auth.annotation.Private;
 import com.jacobhampton.techtest.user.dto.CreateUserRequestDto;
+import com.jacobhampton.techtest.user.dto.UpdateUserRequestDto;
 import com.jacobhampton.techtest.user.dto.UserResponseDto;
 import com.jacobhampton.techtest.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class UserController implements UserControllerSpec {
 
     @Private
     @PatchMapping("{userId}")
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable String userId, @RequestBody CreateUserRequestDto body) {
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable String userId, @RequestBody UpdateUserRequestDto body) {
         log.debug("Received update user request");
         UserResponseDto response = userService.updateUser(userId, body);
         return ResponseEntity.ok(response);
