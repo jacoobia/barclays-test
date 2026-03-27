@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: tech-test
@@ -7,12 +10,15 @@ spring:
   mongodb:
     uri: mongodb+srv://${DB_USERNAME:root}:${DB_PASSWORD:root}@dev.yuj1nxu.mongodb.net/?appName=dev
     database: dev
-server:
-  port: 8080
-
 
 app:
   jwt:
     accessTokenExpiry: 900000
     refreshTokenExpiry: 604800000
     secret: ${JWT_SECRET:some-very-secret-string-lol}
+
+springdoc:
+  swagger-ui:
+    path: /docs
+  api-docs:
+    path: /defs

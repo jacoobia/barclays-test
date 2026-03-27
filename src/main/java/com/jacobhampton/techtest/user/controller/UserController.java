@@ -1,7 +1,6 @@
 package com.jacobhampton.techtest.user.controller;
 
 import com.jacobhampton.techtest.auth.annotation.Private;
-import com.jacobhampton.techtest.auth.context.AuthContext;
 import com.jacobhampton.techtest.user.dto.CreateUserRequestDto;
 import com.jacobhampton.techtest.user.dto.UserResponseDto;
 import com.jacobhampton.techtest.user.service.UserService;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/v1/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserControllerSpec {
 
     private final UserService userService;
 
