@@ -29,7 +29,7 @@ public class Account {
 
     private AccountType accountType;
 
-    private int balance;
+    private double balance;
 
     private Currency currency;
 

@@ -9,7 +9,7 @@ public record AccountResponseDto(
         String sortCode,
         String name,
         AccountType accountType,
-        int balance,
+        double balance,
         Currency currency,
         String createdTimestamp,
         String updatedTimestamp

@@ -19,11 +19,13 @@ public class AuthController implements AuthControllerSpec {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(@RequestBody LoginRequestDto body) {
+        log.debug("Received login request");
         return ResponseEntity.ok(authService.login(body));
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<AuthResponseDto> refresh(@RequestBody RefreshRequestDto body) {
+        log.debug("Received refresh tokens request");
         return ResponseEntity.ok(authService.refreshTokens(body));
     }
 

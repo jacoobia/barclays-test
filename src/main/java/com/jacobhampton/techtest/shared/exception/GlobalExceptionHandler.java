@@ -42,4 +42,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(InsufficientFundsException.class)
+    public ResponseEntity<ErrorResponseDto> handleInsufficientFunds(InsufficientFundsException exception) {
+        ErrorResponseDto response = new ErrorResponseDto(exception.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_CONTENT);
+    }
+
 }

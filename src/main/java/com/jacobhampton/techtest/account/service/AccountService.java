@@ -61,6 +61,17 @@ public class AccountService {
         return !accountRepository.findByUserId(authContext.getUserId()).isEmpty();
     }
 
+    public boolean accountExists(String accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber).isPresent();
+    }
+
+    public boolean isAccountOwner(String accountNumber) {
+        AuthContext authContext = AuthContext.get();
+        return accountRepository.findByAccountNumber(accountNumber)
+                .map(account -> account.getUserId().equals(authContext.getUserId()))
+                .orElse(false);
+    }
+
     /**
      * Originally I had added this has account check before reading further and seeing the scenario:
      * "User wants to fetch another user's bank account details" which should return forbidden not 404
@@ -106,6 +117,32 @@ public class AccountService {
         }
 
         accountRepository.delete(existingAccount);
+    }
+
+    public double getBalance(String accountNumber) {
+        AuthContext authContext = AuthContext.get();
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if (!account.getUserId().equals(authContext.getUserId())) {
+            throw new AccessDeniedException("Unauthorized");
+        }
+
+        return account.getBalance();
+    }
+
+    public void updateBalance(String accountNumber, double amount) {
+        AuthContext authContext = AuthContext.get();
+        Account account = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if (!account.getUserId().equals(authContext.getUserId())) {
+            throw new AccessDeniedException("Unauthorized");
+        }
+
+        account.setBalance(account.getBalance() + amount);
+        account.setUpdatedTimestamp(Instant.now());
+        accountRepository.save(account);
     }
 
 }
