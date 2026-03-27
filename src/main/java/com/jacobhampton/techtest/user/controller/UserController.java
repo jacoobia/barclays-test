@@ -1,5 +1,7 @@
 package com.jacobhampton.techtest.user.controller;
 
+import com.jacobhampton.techtest.auth.annotation.Private;
+import com.jacobhampton.techtest.auth.context.AuthContext;
 import com.jacobhampton.techtest.user.dto.CreateUserRequestDto;
 import com.jacobhampton.techtest.user.dto.UserResponseDto;
 import com.jacobhampton.techtest.user.service.UserService;
@@ -24,6 +26,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @Private
     @GetMapping("{userId}")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable String userId) {
         UserResponseDto response = userService.getUser(userId);

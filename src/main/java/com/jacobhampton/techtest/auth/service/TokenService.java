@@ -26,19 +26,19 @@ public class TokenService {
     @Value("${app.jwt.refreshTokenExpiry}")
     private long refreshTokenExpiry;
 
-    public String generateAccessToken(String email) {
+    public String generateAccessToken(String userId) {
         return Jwts.builder()
-                .subject(email)
+                .subject(userId)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpiry))
                 .signWith(getSigningKey())
                 .compact();
     }
 
-    public String generateRefreshToken(String email) {
+    public String generateRefreshToken(String userId) {
         Date expiration = new Date(System.currentTimeMillis() + refreshTokenExpiry);
         return Jwts.builder()
-                .subject(email)
+                .subject(userId)
                 .issuedAt(new Date())
                 .expiration(expiration)
                 .signWith(getSigningKey())
@@ -57,7 +57,7 @@ public class TokenService {
         }
     }
 
-    public String extractEmail(String token) {
+    public String extractUserId(String token) {
         return Jwts.parser()
                         .verifyWith(getSigningKey())
                         .build()

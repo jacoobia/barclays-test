@@ -29,8 +29,8 @@ public class AuthService {
         }
 
         return new AuthResponseDto(
-                tokenService.generateAccessToken(user.getEmail()),
-                tokenService.generateRefreshToken(user.getEmail())
+                tokenService.generateAccessToken(user.getId()),
+                tokenService.generateRefreshToken(user.getId())
         );
     }
 
@@ -41,10 +41,10 @@ public class AuthService {
             throw new RuntimeException("Invalid refresh token");
         }
 
-        String email = tokenService.extractEmail(refreshToken);
+        String userId = tokenService.extractUserId(refreshToken);
         return new AuthResponseDto(
-                tokenService.generateAccessToken(email),
-                tokenService.generateRefreshToken(email)
+                tokenService.generateAccessToken(userId),
+                tokenService.generateRefreshToken(userId)
         );
     }
 

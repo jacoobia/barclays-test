@@ -1,5 +1,8 @@
 package com.jacobhampton.techtest.user.service;
 
+import com.jacobhampton.techtest.auth.context.AuthContext;
+import com.jacobhampton.techtest.shared.exception.AccessDeniedException;
+import com.jacobhampton.techtest.shared.exception.UserNotFoundException;
 import com.jacobhampton.techtest.user.dto.CreateUserRequestDto;
 import com.jacobhampton.techtest.user.dto.UserResponseDto;
 import com.jacobhampton.techtest.user.model.User;
@@ -36,9 +39,14 @@ public class UserService {
     }
 
     public UserResponseDto getUser(String userId) {
+        AuthContext authContext = AuthContext.get();
+        if(!authContext.getUserId().equals(userId)) {
+            throw new AccessDeniedException("Unauthorized");
+        }
+
         return userRepository.findById(userId)
                 .map(UserResponseDto::from)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
 }
